@@ -1,15 +1,15 @@
 # Ng2Todo
 
-Pour contribuer : 
-``` 
-git clone https://RomainMarecat@bitbucket.org/RomainMarecat/ng2-todo-miashs.git
+Pour contribuer :
+```
+git clone https://github.com/RomainMarecat/ng2-todo-miashs.git
 cd ng2-todo-miashs
 git checkout -b feat/your-feature
 npm install
 npm install -g @angular/cli
 ng serve
 ```
-Fais ta feature. 
+Fais ta feature.
 ```
 ng lint
 ng build
@@ -38,7 +38,7 @@ git push origin feat/your-feature -f
 ```
 }
 
-Redux : 
+Redux :
 ngx store
 changeDetection: ng.core.ChangeDetectionStrategy.OnPush
 immutable
