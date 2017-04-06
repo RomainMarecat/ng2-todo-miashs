@@ -6,6 +6,7 @@ git clone https://RomainMarecat@bitbucket.org/RomainMarecat/ng2-todo-miashs.git
 cd ng2-todo-miashs
 git checkout -b feat/your-feature
 npm install
+npm install -g @angular/cli
 ng serve
 ```
 Fais ta feature. 
@@ -36,6 +37,12 @@ git rebase --continue
 git push origin feat/your-feature -f
 ```
 }
+
+Redux : 
+ngx store
+changeDetection: ng.core.ChangeDetectionStrategy.OnPush
+immutable
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
