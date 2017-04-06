@@ -17,8 +17,7 @@ button {
     -webkit-appearance: none;
     appearance: none;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -30,14 +29,12 @@ body {
     max-width: 550px;
     margin: 0 auto;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-weight: 300;
 }
 
-button,
-input[type="checkbox"] {
-    outline: none;
+:focus {
+    outline: 0;
 }
 
 .hidden {
@@ -92,15 +89,13 @@ input[type="checkbox"] {
     font-weight: inherit;
     line-height: 1.4em;
     border: 0;
-    outline: none;
     color: inherit;
     padding: 6px;
     border: 1px solid #999;
     box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .new-todo {
@@ -116,29 +111,37 @@ input[type="checkbox"] {
     border-top: 1px solid #e6e6e6;
 }
 
-label[for='toggle-all'] {
-    display: none;
-}
-
 .toggle-all {
-    position: absolute;
-    top: -55px;
-    left: -12px;
-    width: 60px;
-    height: 34px;
     text-align: center;
     border: none;
     /* Mobile Safari */
+    opacity: 0;
+    position: absolute;
+    top: -52px;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
 }
 
-.toggle-all:before {
+.toggle-all + label {
+    width: 60px;
+    height: 34px;
+    font-size: 0;
+    position: absolute;
+    top: -52px;
+    left: -13px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.toggle-all + label:before {
     content: '❯';
     font-size: 22px;
     color: #e6e6e6;
     padding: 10px 27px 10px 27px;
 }
 
-.toggle-all:checked:before {
+.toggle-all:checked + label:before {
     color: #737373;
 }
 
@@ -166,7 +169,7 @@ label[for='toggle-all'] {
 .todo-list li.editing .edit {
     display: block;
     width: 506px;
-    padding: 13px 17px 12px 17px;
+    padding: 12px 16px;
     margin: 0 0 0 43px;
 }
 
@@ -189,19 +192,27 @@ label[for='toggle-all'] {
     appearance: none;
 }
 
-.todo-list li .toggle:after {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+.todo-list li .toggle {
+    opacity: 0;
 }
 
-.todo-list li .toggle:checked:after {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+.todo-list li .toggle + label {
+    /*firefox only requires # to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433*/
+    /* IE and Edge required _everything_ to be escaped to render, so we do that instead of just the # - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/ */
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+.todo-list li .toggle:checked + label {
+    /*firefox only requires # to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433*/
+    /* IE and Edge required _everything_ to be escaped to render, so we do that instead of just the # - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/ */
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
 }
 
 .todo-list li label {
-    white-space: pre-line;
     word-break: break-all;
-    padding: 15px 60px 15px 15px;
-    margin-left: 45px;
+    padding: 15px 15px 15px 60px;
     display: block;
     line-height: 1.2;
     transition: color 0.4s;
@@ -297,7 +308,6 @@ label[for='toggle-all'] {
     border-radius: 3px;
 }
 
-.filters li a.selected,
 .filters li a:hover {
     border-color: rgba(175, 47, 47, 0.1);
 }
@@ -313,7 +323,6 @@ html .clear-completed:active {
     line-height: 20px;
     text-decoration: none;
     cursor: pointer;
-    position: relative;
 }
 
 .clear-completed:hover {
@@ -344,8 +353,8 @@ html .clear-completed:active {
 
 
 /*
-    Hack to remove background from Mobile Safari.
-    Can't use it globally since it destroys checkboxes in Firefox
+	Hack to remove background from Mobile Safari.
+	Can't use it globally since it destroys checkboxes in Firefox
 */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -356,12 +365,6 @@ html .clear-completed:active {
     .todo-list li .toggle {
         height: 40px;
     }
-    .toggle-all {
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
-        -webkit-appearance: none;
-        appearance: none;
-    }
 }
 
 @media (max-width: 430px) {
@@ -371,142 +374,4 @@ html .clear-completed:active {
     .filters {
         bottom: 10px;
     }
-}
-
-#loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000
-}
-
-#loader-wrapper .loader-section {
-    position: fixed;
-    top: 0;
-    width: 51%;
-    height: 100%;
-    background: #eceff1;
-    z-index: 1000;
-    -webkit-transform: translateX(0);
-    -ms-transform: translateX(0);
-    transform: translateX(0)
-}
-
-#loader-wrapper .loader-section.section-left {
-    left: 0
-}
-
-#loader-wrapper .loader-section.section-right {
-    right: 0
-}
-
-#loader {
-    display: block;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #3498db;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-    z-index: 1001
-}
-
-#loader:before {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #e74c3c;
-    -webkit-animation: spin 3s linear infinite;
-    animation: spin 3s linear infinite
-}
-
-#loader:after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #f9c922;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite
-}
-
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg)
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg)
-    }
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg)
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg)
-    }
-}
-
-.loaded #loader-wrapper {
-    visibility: hidden;
-    -webkit-transform: translateY(-100%);
-    -ms-transform: translateY(-100%);
-    transform: translateY(-100%);
-    -webkit-transition: all 0.3s 1s ease-out;
-    transition: all 0.3s 1s ease-out
-}
-
-.loaded #loader-wrapper .loader-section.section-left {
-    -webkit-transform: translateX(-100%);
-    -ms-transform: translateX(-100%);
-    transform: translateX(-100%);
-    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
-}
-
-.loaded #loader-wrapper .loader-section.section-right {
-    -webkit-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    transform: translateX(100%);
-    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
-}
-
-.loaded #loader {
-    opacity: 0;
-    -webkit-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out
-}
-
-.progress {
-    background-color: rgba(255, 64, 129, 0.22)
-}
-
-.no-js #loader-wrapper {
-    display: none
 }
