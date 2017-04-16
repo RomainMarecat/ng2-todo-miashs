@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoListService } from './shared/todo-list.service';
+import {SpeechSynthesisComponent} from "./speech/speech-synthesis/speech-synthesis.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
-    TodoComponent
+    TodoComponent,
+    SpeechSynthesisComponent
   ],
   exports: [
     TodoListComponent

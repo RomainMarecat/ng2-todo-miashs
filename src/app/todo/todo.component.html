@@ -1,8 +1,10 @@
 <div class="view">
   <input #inputFait class="toggle" type="checkbox" name="fait" [ngModel]="nf.fait" (ngModelChange)="fait(inputFait.checked)">
   <label class="texte" (dblclick)="edit()">{{ nf.texte }}</label>
+  <app-speech-synthesis [choseTexte]="nf.texte"></app-speech-synthesis>
   <button class="destroy" (click)="dispose()"></button>
 </div>
 <form *ngIf="editing" (ngSubmit)="setText(newText.value)">
   <input class="edit" [ngModel]="nf.texte" (blur)="setText(newText.value)" #newText name="texte">
 </form>
+
