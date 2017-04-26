@@ -1,13 +1,17 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { TodoList } from './../shared/todo-list';
 import { TodoListService } from './../shared/todo-list.service';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
+import { Store } from '@ngrx/store';
+import * as reducer from './../reducers/todo-list.reducers';
+import * as actions from './../actions/todo-list.actions';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  styleUrls: ['./todo-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit {
   @Input() title: string;
@@ -20,52 +24,65 @@ export class TodoListComponent implements OnInit {
   filterActives: TodoFilter;
   currentFilter: TodoFilter;
 
-  constructor (private todoListService: TodoListService) {
-    this.choses = [];
-    this.toggle = false;
-    this.filterAll = () => true;
-    this.filterCompleted = (c) => c.fait;
-    this.filterActives = (c) => !c.fait;
-    this.currentFilter = this.filterAll;
+  todos: ReadonlyArray<Todo>;
+
+  constructor(private store: Store<reducer.State>) {
+
   }
 
   ngOnInit() {
-    this.todoListService.getData().then((nf) => {
-      this.nf = nf;
-      this.choses = nf.choses;
+    this.store.dispatch(new actions.InitListAction());
+    this.store.select(reducer.getTodoList).map((todos) => {
+      this.todos = todos;
     });
   }
 
-  getChoses(): Todo[] {
-    return this.choses.filter(this.currentFilter);
-  }
+  // constructor (private todoListService: TodoListService) {
+  //   this.choses = [];
+  //   this.toggle = false;
+  //   this.filterAll = () => true;
+  //   this.filterCompleted = (c) => c.fait;
+  //   this.filterActives = (c) => !c.fait;
+  //   this.currentFilter = this.filterAll;
+  // }
 
-  getCountTodo() {
-    return this.choses.reduce((acc, chose) => {
-      return acc + (chose.fait ? 0 : 1);
-    }, 0);
-  }
+  // ngOnInit() {
+  //   this.todoListService.getData().then((nf) => {
+  //     this.nf = nf;
+  //     this.choses = nf.choses;
+  //   });
+  // }
 
-  getCountCompleted() {
-    return this.choses.reduce((acc, chose) => {
-      return acc + (chose.fait ? 1 : 0);
-    }, 0);
-  }
+  // getChoses(): Todo[] {
+  //   return this.choses.filter(this.currentFilter);
+  // }
 
-  disposeAll() {
-    return this.choses.filter(this.filterCompleted).forEach(c => c.dispose());
-  }
+  // getCountTodo() {
+  //   return this.choses.reduce((acc, chose) => {
+  //     return acc + (chose.fait ? 0 : 1);
+  //   }, 0);
+  // }
 
-  addTodo() {
-    this.nf.Ajouter(this.newTodo.nativeElement.value);
-  }
+  // getCountCompleted() {
+  //   return this.choses.reduce((acc, chose) => {
+  //     return acc + (chose.fait ? 1 : 0);
+  //   }, 0);
+  // }
 
-  toggleAllChange() {
-    const check = !this.toggleAll();
-    this.choses.forEach((c) => c.Fait(check));
-  }
+  // disposeAll() {
+  //   return this.choses.filter(this.filterCompleted).forEach(c => c.dispose());
+  // }
 
-  toggleAll(): boolean {
-    return this.choses.reduce((acc, c) => acc && c.fait, true);
-  }
+  // addTodo() {
+  //   this.nf.Ajouter(this.newTodo.nativeElement.value);
+  // }
+
+  // toggleAllChange() {
+  //   const check = !this.toggleAll();
+  //   this.choses.forEach((c) => c.Fait(check));
+  // }
+
+  // toggleAll(): boolean {
+  //   return this.choses.reduce((acc, c) => acc && c.fait, true);
+  // }
 }
