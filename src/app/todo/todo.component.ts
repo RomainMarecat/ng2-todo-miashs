@@ -40,7 +40,8 @@ export class TodoComponent implements OnInit {
   }
 
   setText(value) {
-    // this.nf.Texte(value);
+    this.store.dispatch(new actions.ChangeTodoStatus(
+      Object.assign({}, this.todo, {text: value})));
     this.editing = false;
   }
 }

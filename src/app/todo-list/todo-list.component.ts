@@ -17,8 +17,6 @@ import { Observable } from 'rxjs/Observable';
 export class TodoListComponent implements OnInit {
   @Input() title: string;
   @ViewChild('newTodo') newTodo: ElementRef;
-  public nf: TodoList;
-  private choses: Todo[];
   toggle: boolean;
   filterAll: TodoFilter;
   filterCompleted: TodoFilter;
@@ -39,16 +37,11 @@ export class TodoListComponent implements OnInit {
     this.todos = this.store.select(reducer.getTodoList);
   }
 
-  // ngOnInit() {
-  //   this.todoListService.getData().then((nf) => {
-  //     this.nf = nf;
-  //     this.choses = nf.choses;
-  //   });
-  // }
-
-  // getChoses(): Todo[] {
-  //   return this.choses.filter(this.currentFilter);
-  // }
+  getTodos(): Observable<Todo[]> {
+    return this.todos.map((todos: Todo[]) =>
+      todos.filter(this.currentFilter)
+    );
+  }
 
   getCountTodo(): Observable<number> {
     return this.todos.map((todos: Todo[]) =>
@@ -58,13 +51,15 @@ export class TodoListComponent implements OnInit {
 
   getCountCompleted(): Observable<number> {
     return this.todos.map((todos: Todo[]) => {
-      console.log(todos);
       return todos.reduce((acc, chose) => acc + (chose.isCompleted ? 1 : 0), 0)
     });
   }
 
   disposeAll() {
-    // return this.todos.filter(this.filterCompleted).forEach(c => c.dispose());
+    this.todos.map((todos: Todo[]) =>
+      todos.filter(this.filterCompleted)
+        .forEach(c => this.store.dispatch(new actions.DeleteTodoAction(c)))
+    );
   }
 
   addTodo() {
@@ -74,26 +69,23 @@ export class TodoListComponent implements OnInit {
     } as Todo;
     this.store.dispatch(new actions.AddTodoAction(todo));
     this.newTodo.nativeElement.value = '';
-    // this.nf.Ajouter(this.newTodo.nativeElement.value);
   }
 
   toggleAllChange() {
-    console.log('toto')
     const check = true;
     this.todos.map((todos: Todo[]) => {
-      console.log('todos');
-      console.log(todos);
       return todos.forEach((c) => {
-        console.log(c);
-        c.isCompleted = check;
-        this.store.dispatch(new actions.ChangeTodoStatus(c));
-      })
+        this.store.dispatch(new actions.ChangeTodoStatus(Object.assign({}, c, {isCompleted: check})))
+      });
     });
   }
 
   toggleAll(): Observable<boolean> {
-    return this.todos.map((todos: Todo[]) =>
-      todos.reduce((acc, c) => acc && c.isCompleted, true)
-    );
+    return this.todos.map((todos: Todo[]) => {
+      const val = todos.reduce((acc, c) => acc && c.isCompleted, true);
+      console.log(val);
+
+      return val;
+    });
   }
 }

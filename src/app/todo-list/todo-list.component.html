@@ -9,7 +9,7 @@
     <input class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-      <li *ngFor="let todo of todos | async" [class.completed]="todo.isCompleted" [class.editing]="itemchose.editing">
+      <li *ngFor="let todo of getTodos() | async" [class.completed]="todo.isCompleted === true" [class.editing]="itemchose.editing">
         <app-todo [todo]="todo" #itemchose></app-todo>
       </li>
     </ul>

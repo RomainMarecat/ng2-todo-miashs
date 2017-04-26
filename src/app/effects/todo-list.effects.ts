@@ -34,35 +34,42 @@ export class TodoListEffects {
   @Effect()
   deleteTodo: Observable<Action> = this.actions$
     .ofType(todoList.DELETE_TODO)
-    .switchMap((action: todoList.DeleteTodoAction) => {
-
-
-      return this.db.executeWrite('todos', 'delete', [ action.payload.id ])
-        .map(() => new todoList.DeleteTodoActionSuccess(action.payload))
+    .map((action: todoList.DeleteTodoAction) => action.payload)
+    .mergeMap((todo: Todo) => {
+      return this.db.executeWrite('todos', 'delete', [ todo.id ])
+        .map(() => {
+          return new todoList.DeleteTodoActionSuccess(todo);
+        })
     });
 
   @Effect()
   addTodo: Observable<Action> = this.actions$
     .ofType(todoList.ADD_TODO)
-    .switchMap((action: todoList.AddTodoAction) =>
-      this.db.insert('todos', [ action.payload ])
-        .map((newTodo: Todo) => {
-          console.log(newTodo);
-          return new todoList.AddTodoActionSuccess(newTodo)
-        })
+    .map((action: todoList.AddTodoAction) => action.payload)
+    .mergeMap((todo: Todo) =>
+      this.db.insert('todos', [ todo ])
+        .map((todo) => todo)
+        .mergeMap(() => this.db.query('todos')
+          .toArray()
+          .map((todos: Todo[]) =>
+            new todoList.AddTodoActionSuccess(todos))
+        )
     );
 
   @Effect()
   changeStatus: Observable<Action> = this.actions$
     .ofType(todoList.CHANGE_STATUS)
-    .map((action: todoList.ChangeTodoStatus) => action)
-    .switchMap((action: todoList.ChangeTodoStatus) => {
-      console.log(action.payload);
-      return this.db.executeWrite('todos', 'update', [ action.payload.id ])
-        .map((todo: Todo) =>  {
-          console.log(todo);
+    .map((action: todoList.ChangeTodoStatus) => action.payload)
+    .mergeMap((todo: Todo) =>
+      this.db.executeWrite('todos', 'delete', [ todo.id ])
+      .map((todo: Todo) => todo)
+      .mergeMap(() =>
+        this.db.insert('todos', [ todo ])
+        .map(() =>  {
           return new todoList.ChangeTodoStatusSuccess(todo);
         })
-      }
+        .catch((error) => {
+          return of(new todoList.ChangeTodoStatusFail(todo))
+        }))
     );
 }

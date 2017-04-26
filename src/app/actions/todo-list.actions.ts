@@ -9,8 +9,7 @@ export const ADD_TODO =               '[TodoList] Add todo';
 export const ADD_TODO_SUCCESS =       '[TodoList] Add todo success';
 export const CHANGE_STATUS =          '[TodoList] Change status';
 export const CHANGE_STATUS_SUCCESS =  '[TodoList] Change status success';
-export const GET_TODO_ITEM =          '[TodoList] Get todo item';
-export const GET_TODO_ITEM_SUCCESS =  '[TodoList] Get todo item success';
+export const CHANGE_STATUS_FAIL =     '[TodoList] Change status fail';
 
 export class InitListAction implements Action {
   type = INIT_LIST;
@@ -46,7 +45,7 @@ export class AddTodoAction implements Action {
 export class AddTodoActionSuccess implements Action {
   type = ADD_TODO_SUCCESS;
 
-  constructor(public payload: Todo) { }
+  constructor(public payload: Todo[]) { }
 }
 
 export class ChangeTodoStatus implements Action {
@@ -61,6 +60,12 @@ export class ChangeTodoStatusSuccess implements Action {
   constructor(public payload: Todo) { }
 }
 
+export class ChangeTodoStatusFail implements Action {
+  type = CHANGE_STATUS_FAIL;
+
+  constructor(public payload: Todo) { }
+}
+
 export type Actions
   = InitListAction
   | InitListActionSuccess
@@ -69,4 +74,5 @@ export type Actions
   | AddTodoAction
   | AddTodoActionSuccess
   | ChangeTodoStatus
-  | ChangeTodoStatusSuccess;
+  | ChangeTodoStatusSuccess
+  | ChangeTodoStatusFail;
