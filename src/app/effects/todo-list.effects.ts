@@ -37,7 +37,7 @@ export class TodoListEffects {
     .map((action: todoList.DeleteTodoAction) => action)
     .switchMap((action: todoList.DeleteTodoAction) =>
       this.db.executeWrite('todos', 'delete', [ action.payload ])
-        .map((todos: Todo[]) => new todoList.DeleteTodoActionSuccess(todos))
+        .map((todo: Todo) => new todoList.DeleteTodoActionSuccess(todo))
     );
 
   @Effect()
@@ -56,8 +56,13 @@ export class TodoListEffects {
   changeStatus: Observable<Action> = this.actions$
     .ofType(todoList.CHANGE_STATUS)
     .map((action: todoList.ChangeTodoStatus) => action)
-    .switchMap((action: todoList.ChangeTodoStatus) =>
-      this.db.executeWrite('todos', 'update', [ action.payload ])
-        .map((todos: Todo[]) => new todoList.ChangeTodoStatusSuccess(todos))
+    .switchMap((action: todoList.ChangeTodoStatus) => {
+      console.log(action.payload);
+      return this.db.executeWrite('todos', 'update', [ action.payload.id ])
+        .map((todo: Todo) =>  {
+          console.log(todo);
+          return new todoList.ChangeTodoStatusSuccess(todo);
+        })
+      }
     );
 }
