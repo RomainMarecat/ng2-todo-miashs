@@ -14,7 +14,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoListService } from './shared/todo-list.service';
 import { schema } from './db';
-import { reducer } from './reducers/todo-list.reducers';
+import { reducer } from './reducers/root.reducers';
 import { TodoListEffects } from './effects/todo-list.effects';
 
 @NgModule({
