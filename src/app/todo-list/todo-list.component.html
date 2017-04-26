@@ -4,6 +4,7 @@
     <form (ngSubmit)="addTodo()">
       <input class="new-todo" placeholder="Que faire?" #newTodo autofocus>
     </form>
+<app-speech-recognition></app-speech-recognition>
   </header>
   <section class="main">
     <input class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()">

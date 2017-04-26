@@ -9,13 +9,16 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoListService } from './shared/todo-list.service';
 import {SpeechSynthesisComponent} from "./speech/speech-synthesis/speech-synthesis.component";
+import {SpeechRecognitionComponent} from "./speech/speech-recognition/speech-recognition.component";
+import {SpeechRecognitionService} from "./speech/speech-recognition.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     TodoComponent,
-    SpeechSynthesisComponent
+    SpeechSynthesisComponent,
+    SpeechRecognitionComponent
   ],
   exports: [
     TodoListComponent
@@ -26,7 +29,10 @@ import {SpeechSynthesisComponent} from "./speech/speech-synthesis/speech-synthes
     HttpModule,
     CommonModule
   ],
-  providers: [TodoListService],
+  providers: [
+    TodoListService,
+    SpeechRecognitionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
