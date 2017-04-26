@@ -28,7 +28,7 @@ export class TodoListEffects {
     .switchMap(() =>
       this.db.query('todos')
         .toArray()
-        .map((todos: Todo[]) => new todoList.InitListActionSuccess(todos))
+        .map((todos: Array<Todo>) => new todoList.InitListActionSuccess(todos))
     );
 
   @Effect()
@@ -47,7 +47,7 @@ export class TodoListEffects {
     .switchMap((action: todoList.AddTodoAction) =>
       this.db.insert('todos', [ action.payload ])
         .map((newTodo: Todo) => {
-          console.log(newTodo);
+          console.log(newTodo)
           return new todoList.AddTodoActionSuccess(newTodo)
         })
     );

@@ -14,7 +14,7 @@ export const GET_TODO_ITEM_SUCCESS =  '[TodoList] Get todo item success';
 
 export class InitListAction implements Action {
   type = INIT_LIST;
-  payload: Todo = {} as Todo;
+  payload: Object = {};
 
   constructor() { }
 }
@@ -28,49 +28,37 @@ export class InitListActionSuccess implements Action {
 export class DeleteTodoAction implements Action {
   type = DELETE_TODO;
 
-  constructor(public payload: Todo) { }
+  constructor(public payload: Object) { }
 }
 
 export class DeleteTodoActionSuccess implements Action {
   type = DELETE_TODO_SUCCESS;
 
-  constructor(public payload: Todo[]) { }
+  constructor(public payload: Object) { }
 }
 
 export class AddTodoAction implements Action {
   type = ADD_TODO;
 
-  constructor(public payload: Todo) { }
+  constructor(public payload: Object) { }
 }
 
 export class AddTodoActionSuccess implements Action {
   type = ADD_TODO_SUCCESS;
 
-  constructor(public payload: Todo) { }
+  constructor(public payload: Object) { }
 }
 
 export class ChangeTodoStatus implements Action {
   type = CHANGE_STATUS;
 
-  constructor(public payload: Todo) { }
+  constructor(public payload: Object) { }
 }
 
 export class ChangeTodoStatusSuccess implements Action {
   type = CHANGE_STATUS_SUCCESS;
 
-  constructor(public payload: Todo[]) { }
-}
-
-export class GetTodoItem implements Action {
-  type = GET_TODO_ITEM;
-
-  constructor(public payload: Todo) { }
-}
-
-export class GetTodoItemSuccess implements Action {
-  type = GET_TODO_ITEM_SUCCESS;
-
-  constructor(public payload: Todo[]) { }
+  constructor(public payload: Object) { }
 }
 
 export type Actions
@@ -81,6 +69,4 @@ export type Actions
   | AddTodoAction
   | AddTodoActionSuccess
   | ChangeTodoStatus
-  | ChangeTodoStatusSuccess
-  | GetTodoItem
-  | GetTodoItemSuccess;
+  | ChangeTodoStatusSuccess;

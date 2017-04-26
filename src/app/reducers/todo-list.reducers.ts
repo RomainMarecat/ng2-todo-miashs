@@ -19,19 +19,16 @@ const initialState: State = {
 export function reducer(state = initialState, action: todoList.Actions): State {
   switch (action.type) {
     case todoList.INIT_LIST_SUCCESS:
-      return { ...state, todoList: action.payload };
+      return { ...state, todoList: action.payload as Todo[] };
 
     case todoList.DELETE_TODO_SUCCESS:
-      return { ...state, todoList: action.payload.newList };
+      return { ...state, todoList: action.payload as Todo[] };
 
     case todoList.ADD_TODO_SUCCESS:
-      return { ...state, todoList: [...state.todoList, action.payload.newTodo] };
+      return { ...state, todoList: [...state.todoList, action.payload] as Todo[] };
 
     case todoList.CHANGE_STATUS_SUCCESS:
-      return { ...state, todoList: action.payload.newList };
-
-    case todoList.GET_TODO_ITEM_SUCCESS:
-      return { ...state, activeTodo: action.payload.todoItem };
+      return { ...state, todoList: action.payload as Todo[] };
 
     default:
       return state;
