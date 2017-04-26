@@ -94,6 +94,7 @@ export class TodoListService {
 
 
   getTodoList(): Observable<Array<Todo>> {
+    console.log(this.data);
     return Observable.of(this.data).map(res => res);
   }
 
@@ -105,10 +106,9 @@ export class TodoListService {
 
   addTodo(list: ReadonlyArray<Todo>, text: string): Observable<Todo> {
     const newTodo: Todo = {
-      id: list.length,
       text: text,
       isCompleted: false
-    };
+    } as Todo;
 
     return Observable.of(newTodo).map(res => res);
   }

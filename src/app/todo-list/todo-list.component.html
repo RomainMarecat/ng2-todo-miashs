@@ -6,16 +6,16 @@
     </form>
   </header>
   <section class="main">
-    <input class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()">
+    <input class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-      <li *ngFor="let chose of getChoses()" [class.completed]="chose.fait" [class.editing]="itemchose.editing">
-        <app-todo [nf]="chose" #itemchose></app-todo>
+      <li *ngFor="let todo of todos | async" [class.completed]="todo.isCompleted" [class.editing]="itemchose.editing">
+        <app-todo [todo]="todo" #itemchose></app-todo>
       </li>
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count">{{ getCountTodo() }}<strong></strong> restantes</span>
+    <span class="todo-count">{{ getCountTodo()|async }}<strong></strong> restantes</span>
     <ul class="filters">
       <li>
         <a [class.selected]="currentFilter === filterAll" (click)="currentFilter = filterAll" class="filterAll">Tous</a>
@@ -27,6 +27,6 @@
         <a [class.selected]="currentFilter === filterCompleted" (click)="currentFilter = filterCompleted" class="filterCompleted">Complétés</a>
       </li>
     </ul>
-    <button class="clear-completed" *ngIf="getCountCompleted() > 0" (click)="disposeAll()">Supprimer cochées</button>
+    <button class="clear-completed" *ngIf="(getCountCompleted()|async) > 0" (click)="disposeAll()">Supprimer cochées</button>
   </footer>
 </section>

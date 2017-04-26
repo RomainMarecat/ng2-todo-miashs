@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -31,11 +34,14 @@ import { TodoListEffects } from './effects/todo-list.effects';
     FormsModule,
     HttpModule,
     CommonModule,
+    RouterModule,
+    AppRoutingModule,
     StoreModule.provideStore(reducer),
-    RouterStoreModule.connectRouter(),
+    // RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(TodoListEffects),
-    DBModule.provideDB(schema),
+    DBModule.provideDB(schema)
+
   ],
   providers: [TodoListService],
   bootstrap: [AppComponent]

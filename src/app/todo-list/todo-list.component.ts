@@ -4,8 +4,9 @@ import { TodoListService } from './../shared/todo-list.service';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';
-import * as reducer from './../reducers/todo-list.reducers';
+import * as reducer from './../reducers/root.reducers';
 import * as actions from './../actions/todo-list.actions';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-todo-list',
@@ -23,28 +24,20 @@ export class TodoListComponent implements OnInit {
   filterCompleted: TodoFilter;
   filterActives: TodoFilter;
   currentFilter: TodoFilter;
-
-  todos: ReadonlyArray<Todo>;
+  todos: Observable<ReadonlyArray<Todo>>;
 
   constructor(private store: Store<reducer.State>) {
-
+    this.toggle = false;
+    this.filterAll = () => true;
+    this.filterCompleted = (c) => c.isCompleted;
+    this.filterActives = (c) => !c.isCompleted;
+    this.currentFilter = this.filterAll;
   }
 
   ngOnInit() {
     this.store.dispatch(new actions.InitListAction());
-    this.store.select(reducer.getTodoList).map((todos) => {
-      this.todos = todos;
-    });
+    this.todos = this.store.select(reducer.getTodoList);
   }
-
-  // constructor (private todoListService: TodoListService) {
-  //   this.choses = [];
-  //   this.toggle = false;
-  //   this.filterAll = () => true;
-  //   this.filterCompleted = (c) => c.fait;
-  //   this.filterActives = (c) => !c.fait;
-  //   this.currentFilter = this.filterAll;
-  // }
 
   // ngOnInit() {
   //   this.todoListService.getData().then((nf) => {
@@ -57,32 +50,50 @@ export class TodoListComponent implements OnInit {
   //   return this.choses.filter(this.currentFilter);
   // }
 
-  // getCountTodo() {
-  //   return this.choses.reduce((acc, chose) => {
-  //     return acc + (chose.fait ? 0 : 1);
-  //   }, 0);
-  // }
+  getCountTodo(): Observable<number> {
+    return this.todos.map((todos: Todo[]) =>
+      todos.reduce((acc, chose) => acc + (chose.isCompleted ? 0 : 1), 0)
+    );
+  }
 
-  // getCountCompleted() {
-  //   return this.choses.reduce((acc, chose) => {
-  //     return acc + (chose.fait ? 1 : 0);
-  //   }, 0);
-  // }
+  getCountCompleted(): Observable<number> {
+    return this.todos.map((todos: Todo[]) => {
+      console.log(todos);
+      return todos.reduce((acc, chose) => acc + (chose.isCompleted ? 1 : 0), 0)
+    });
+  }
 
-  // disposeAll() {
-  //   return this.choses.filter(this.filterCompleted).forEach(c => c.dispose());
-  // }
+  disposeAll() {
+    // return this.todos.filter(this.filterCompleted).forEach(c => c.dispose());
+  }
 
-  // addTodo() {
-  //   this.nf.Ajouter(this.newTodo.nativeElement.value);
-  // }
+  addTodo() {
+    const todo = {
+      text: this.newTodo.nativeElement.value,
+      isCompleted: false
+    } as Todo;
+    this.store.dispatch(new actions.AddTodoAction(todo));
+    this.newTodo.nativeElement.value = '';
+    // this.nf.Ajouter(this.newTodo.nativeElement.value);
+  }
 
-  // toggleAllChange() {
-  //   const check = !this.toggleAll();
-  //   this.choses.forEach((c) => c.Fait(check));
-  // }
+  toggleAllChange() {
+    console.log('toto')
+    const check = true;
+    this.todos.map((todos: Todo[]) => {
+      console.log('todos');
+      console.log(todos);
+      return todos.forEach((c) => {
+        console.log(c);
+        c.isCompleted = check;
+        this.store.dispatch(new actions.ChangeTodoStatus(c));
+      })
+    });
+  }
 
-  // toggleAll(): boolean {
-  //   return this.choses.reduce((acc, c) => acc && c.fait, true);
-  // }
+  toggleAll(): Observable<boolean> {
+    return this.todos.map((todos: Todo[]) =>
+      todos.reduce((acc, c) => acc && c.isCompleted, true)
+    );
+  }
 }

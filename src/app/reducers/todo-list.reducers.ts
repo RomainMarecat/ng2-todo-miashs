@@ -19,7 +19,7 @@ const initialState: State = {
 export function reducer(state = initialState, action: todoList.Actions): State {
   switch (action.type) {
     case todoList.INIT_LIST_SUCCESS:
-      return { ...state, todoList: action.payload.newList };
+      return { ...state, todoList: action.payload };
 
     case todoList.DELETE_TODO_SUCCESS:
       return { ...state, todoList: action.payload.newList };

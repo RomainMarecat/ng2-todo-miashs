@@ -1,8 +1,8 @@
 <div class="view">
-  <input #inputFait class="toggle" type="checkbox" name="fait" [ngModel]="nf.fait" (ngModelChange)="fait(inputFait.checked)">
-  <label class="texte" (dblclick)="edit()">{{ nf.texte }}</label>
+  <input #inputFait class="toggle" type="checkbox" name="fait" [ngModel]="todo.isCompleted" (ngModelChange)="fait(inputFait.checked)">
+  <label class="texte" (dblclick)="edit()">{{ todo.text }}</label>
   <button class="destroy" (click)="dispose()"></button>
 </div>
 <form *ngIf="editing" (ngSubmit)="setText(newText.value)">
-  <input class="edit" [ngModel]="nf.texte" (blur)="setText(newText.value)" #newText name="texte">
+  <input class="edit" [ngModel]="todo.text" (blur)="setText(newText.value)" #newText name="texte">
 </form>
