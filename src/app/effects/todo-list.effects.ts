@@ -34,20 +34,20 @@ export class TodoListEffects {
   @Effect()
   deleteTodo: Observable<Action> = this.actions$
     .ofType(todoList.DELETE_TODO)
-    .map((action: todoList.DeleteTodoAction) => action)
-    .switchMap((action: todoList.DeleteTodoAction) =>
-      this.db.executeWrite('todos', 'delete', [ action.payload ])
-        .map((todo: Todo) => new todoList.DeleteTodoActionSuccess(todo))
-    );
+    .switchMap((action: todoList.DeleteTodoAction) => {
+
+
+      return this.db.executeWrite('todos', 'delete', [ action.payload.id ])
+        .map(() => new todoList.DeleteTodoActionSuccess(action.payload))
+    });
 
   @Effect()
   addTodo: Observable<Action> = this.actions$
     .ofType(todoList.ADD_TODO)
-    .map((action: todoList.AddTodoAction) => action)
     .switchMap((action: todoList.AddTodoAction) =>
       this.db.insert('todos', [ action.payload ])
         .map((newTodo: Todo) => {
-          console.log(newTodo)
+          console.log(newTodo);
           return new todoList.AddTodoActionSuccess(newTodo)
         })
     );

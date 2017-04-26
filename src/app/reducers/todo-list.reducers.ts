@@ -22,13 +22,17 @@ export function reducer(state = initialState, action: todoList.Actions): State {
       return { ...state, todoList: action.payload as Todo[] };
 
     case todoList.DELETE_TODO_SUCCESS:
-      return { ...state, todoList: action.payload as Todo[] };
+      console.log(state);
+      console.log(action.payload);
+      return { ...state, todoList: state.todoList.filter((v: Todo) => v !== action.payload) as Todo[] };
 
     case todoList.ADD_TODO_SUCCESS:
+      console.log(state);
+      console.log(action.payload);
       return { ...state, todoList: [...state.todoList, action.payload] as Todo[] };
 
     case todoList.CHANGE_STATUS_SUCCESS:
-      return { ...state, todoList: action.payload as Todo[] };
+      return { ...state, todoList: action.payload as Todo [] };
 
     default:
       return state;
