@@ -37,12 +37,10 @@ export function reducer(state = initialState, action: todoList.Actions): State {
 
     case todoList.CHANGE_STATUS_SUCCESS:
       const todo = action.payload as Todo;
-
       return {
         ...state,
         todoList: [...state.todoList
-        .filter((t: Todo) => todo.id !== t.id)
-        .sort((a, b) => a.id < b.id ? -1 : 1),
+        .filter((t: Todo) => todo.id !== t.id),
         action.payload] as Todo[]
        };
 

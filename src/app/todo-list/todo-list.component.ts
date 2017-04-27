@@ -39,7 +39,7 @@ export class TodoListComponent implements OnInit {
 
   getTodos(): Observable<Todo[]> {
     return this.todos.map((todos: Todo[]) =>
-      todos.filter(this.currentFilter)
+      todos.filter(this.currentFilter).sort((a, b) => a.id < b.id ? -1 : 1)
     );
   }
 
