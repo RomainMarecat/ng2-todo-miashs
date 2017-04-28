@@ -22,8 +22,6 @@ export function reducer(state = initialState, action: todoList.Actions): State {
       return { ...state, todoList: action.payload as Todo[] };
 
     case todoList.DELETE_TODO_SUCCESS:
-      console.log(state);
-      console.log(action.payload);
       return {
         ...state,
         todoList: state.todoList
@@ -38,8 +36,6 @@ export function reducer(state = initialState, action: todoList.Actions): State {
       };
 
     case todoList.ADD_TODO_SUCCESS:
-      console.log(state);
-      console.log(action.payload);
       return { ...state, todoList: action.payload as Todo[] };
 
     case todoList.CHANGE_STATUS_SUCCESS:
@@ -56,7 +52,7 @@ export function reducer(state = initialState, action: todoList.Actions): State {
         ...state,
         todoList: state.todoList
         .map((v: Todo) => {
-          v.isCompleted = !v.isCompleted;
+          v = Object.assign({}, v, {isCompleted: action.toggle});
           return v;
         }) as Todo[]
       };

@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { TodoList } from './../shared/todo-list';
-import { TodoListService } from './../shared/todo-list.service';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';
@@ -69,20 +67,11 @@ export class TodoListComponent implements OnInit {
   }
 
   toggleAllChange() {
-    const check = true;
-    this.todos.map((todos: Todo[]) => {
-      return todos.forEach((c) => {
-        this.store.dispatch(new actions.ChangeTodoStatus(Object.assign({}, c, {isCompleted: check})));
-      });
-    });
+    this.toggle = !this.toggle;
+    this.store.dispatch(new actions.ChangeTodoStatusAll(this.toggle));
   }
 
   toggleAll(): Observable<boolean> {
-    return this.todos.map((todos: Todo[]) => {
-      const val = todos.reduce((acc, c) => acc && c.isCompleted, true);
-      console.log(val);
-
-      return val;
-    });
+    return Observable.of(this.toggle);
   }
 }

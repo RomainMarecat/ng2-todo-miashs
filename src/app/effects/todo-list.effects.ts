@@ -16,9 +16,9 @@ export class TodoListEffects {
     private db: Database) { }
 
   @Effect({ dispatch: false })
-    openDB$: Observable<any> = defer(() => {
-      return this.db.open('todo_app');
-    });
+    openDB$: Observable<any> = defer(() =>
+      this.db.open('todo_app')
+    );
 
   @Effect()
   initTodoList: Observable<Action> = this.actions$
@@ -27,19 +27,20 @@ export class TodoListEffects {
     .switchMap(() =>
       this.db.query('todos')
         .toArray()
-        .map((todos: Array<Todo>) => new todoList.InitListActionSuccess(todos))
+        .map((todos: Array<Todo>) =>
+          new todoList.InitListActionSuccess(todos))
     );
 
   @Effect()
   deleteTodo: Observable<Action> = this.actions$
     .ofType(todoList.DELETE_TODO)
     .map((action: todoList.DeleteTodoAction) => action.payload)
-    .mergeMap((todo: Todo) => {
-      return this.db.executeWrite('todos', 'delete', [ todo.id ])
-        .map(() => {
-          return new todoList.DeleteTodoActionSuccess(todo);
-        });
-    });
+    .mergeMap((todo: Todo) =>
+      this.db.executeWrite('todos', 'delete', [ todo.id ])
+      .map(() =>
+        new todoList.DeleteTodoActionSuccess(todo)
+      )
+    );
 
   @Effect()
   deleteTodos: Observable<Action> = this.actions$
@@ -87,28 +88,46 @@ export class TodoListEffects {
       .map((t: Todo) => t)
       .mergeMap(() =>
         this.db.insert('todos', [ todo ])
-        .map(() =>  {
-          return new todoList.ChangeTodoStatusSuccess(todo);
-        })
-        .catch((error) => {
-          return of(new todoList.ChangeTodoStatusFail(todo));
-        }))
+        .map(() =>
+          new todoList.ChangeTodoStatusSuccess(todo)
+        )
+        .catch((error) =>
+          of(new todoList.ChangeTodoStatusFail(todo))
+        ))
     );
 
   @Effect()
   changeStatusAll: Observable<Action> = this.actions$
-    .ofType(todoList.CHANGE_STATUS)
-    .map((action: todoList.ChangeTodoStatus) => action.payload)
-    .mergeMap((todo: Todo) =>
-      this.db.executeWrite('todos', 'delete', [ todo.id ])
-      .map((t: Todo) => t)
-      .mergeMap(() =>
-        this.db.insert('todos', [ todo ])
-        .map(() =>  {
-          return new todoList.ChangeTodoStatusSuccess(todo);
+    .ofType(todoList.CHANGE_STATUS_ALL)
+    .map((action: todoList.ChangeTodoStatusAll) => action.payload)
+    .mergeMap((toggle: boolean) =>
+      this.db.query('todos')
+      .toArray()
+      .map((todos: Todo[]) =>
+        todos.map((todo: Todo) => {
+          todo.isCompleted = toggle;
+          return todo;
         })
-        .catch((error) => {
-          return of(new todoList.ChangeTodoStatusFail(todo));
-        }))
+      )
+      .mergeMap((todos: Todo[]) =>
+        this.db.executeWrite(
+          'todos',
+          'delete',
+          todos.reduce((prev, current: Todo) =>
+            prev.concat(current.id), [])
+        )
+        .map(() =>
+          todos
+        )
+      )
+      .mergeMap((todos: Todo[]) =>
+        this.db.insert(
+          'todos',
+          todos
+        )
+        .map(() =>
+          new todoList.ChangeTodoStatusAllSuccess(todos, toggle)
+        )
+      )
     );
 }
