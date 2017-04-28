@@ -15,6 +15,7 @@ export const CHANGE_STATUS_FAIL =         '[TodoList] Change status fail';
 export const CHANGE_STATUS_ALL =          '[TodoList] Change status all';
 export const CHANGE_STATUS_ALL_SUCCESS =  '[TodoList] Change status all success';
 
+
 export class InitListAction implements Action {
   type = INIT_LIST;
   payload: Todo = {} as Todo;
