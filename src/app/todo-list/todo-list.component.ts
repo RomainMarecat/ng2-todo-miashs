@@ -96,7 +96,9 @@ export class TodoListComponent implements OnInit, OnDestroy {
     if (this.newTodo.nativeElement.value !== '') {
       const todo = {
         text: this.newTodo.nativeElement.value,
-        isCompleted: false
+        isCompleted: false,
+        label: 'primary',
+        description: ''
       } as Todo;
       this.store.dispatch(new actions.AddTodoAction(todo));
       this.newTodo.nativeElement.value = '';

@@ -1,0 +1,20 @@
+<h2 md-dialog-title>Editer la description</h2>
+<div md-dialog-content>
+  <label for="description" *ngIf="todo.description && !editing" (dblclick)="edit()">
+    {{ todo.description }}
+  </label>
+  <label for="description" *ngIf="!todo.description && !editing" (dblclick)="edit()">
+    Aucune description pour le moment
+  </label>
+  <form *ngIf="editing" (ngSubmit)="setDescription(newDescription.value)">
+    <textarea class="edit" [ngModel]="todo.description" #newDescription name="description"></textarea>
+  </form>
+</div>
+<div md-dialog-actions>
+  <button type="button" md-raised-button (click)="dialogRef.close(false)">
+    Cancel
+  </button>
+  <button type="button" md-raised-button (click)="saveAndClose()">
+    Ok
+  </button>
+</div>

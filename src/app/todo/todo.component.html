@@ -1,7 +1,17 @@
 <div class="view">
-  <input #inputFait class="toggle" type="checkbox" name="fait" [ngModel]="todo.isCompleted" (ngModelChange)="fait(inputFait.checked)">
-  <label class="texte" (dblclick)="edit()">{{ todo.text }}</label>
-  <button class="destroy" (click)="dispose()"></button>
+  <input #inputDone class="toggle" type="checkbox" name="done" [ngModel]="todo.isCompleted" (ngModelChange)="done(inputDone.checked)">
+  <label class="texte" (dblclick)="edit()" *ngIf="!isSmallDevice()">{{ todo.text }}
+  </label>
+  <label class="texte" (click)="edit()" *ngIf="isSmallDevice()">{{ todo.text }}
+  </label>
+  <button class="color" md-mini-fab [color]="todo.label" (click)="setLabel()">
+  </button>
+  <button class="description" (click)="openDialogDescription()">
+    <md-icon>mode_edit</md-icon>
+  </button>
+  <button class="destroy" (click)="dispose()">
+    <md-icon>close</md-icon>
+  </button>
 </div>
 <form *ngIf="editing" (ngSubmit)="setText(newText.value)">
   <input class="edit" [ngModel]="todo.text" (blur)="setText(newText.value)" #newText name="texte">
