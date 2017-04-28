@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Location } from '@angular/common';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';

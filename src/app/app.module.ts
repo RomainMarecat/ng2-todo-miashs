@@ -24,6 +24,7 @@ import { TodoListEffects } from './effects/todo-list.effects';
 import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
 import 'hammerjs';
 import { TodoDescriptionComponent } from './todo/todo-description/todo-description.component';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TodoDescriptionComponent } from './todo/todo-description/todo-descripti
     CommonModule,
     RouterModule,
     AppRoutingModule,
+    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
     MaterialModule.forRoot(),
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
