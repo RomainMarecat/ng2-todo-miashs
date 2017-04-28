@@ -1,33 +1,68 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { SpeechRecognitionService } from './../shared/speech-recognition.service';
 import * as reducer from './../reducers/root.reducers';
 import * as actions from './../actions/todo-list.actions';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css'],
+  styleUrls: ['./todo-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @ViewChild('newTodo') newTodo: ElementRef;
+  error: any;
   toggle: boolean;
   filterAll: TodoFilter;
   filterCompleted: TodoFilter;
   filterActives: TodoFilter;
   currentFilter: TodoFilter;
   todos: Observable<ReadonlyArray<Todo>>;
+  iconRecord: string;
 
-  constructor(private store: Store<reducer.State>) {
+  constructor(private store: Store<reducer.State>,
+    private speechRecognitionService: SpeechRecognitionService) {
     this.toggle = false;
     this.filterAll = () => true;
     this.filterCompleted = (c) => c.isCompleted;
     this.filterActives = (c) => !c.isCompleted;
     this.currentFilter = this.filterAll;
+    this.iconRecord = 'keyboard_voice';
+  }
+
+  ngOnDestroy() {
+    this.speechRecognitionService.unsubscribe();
+  }
+
+  activateSpeech(event: any) {
+    this.iconRecord = 'settings_voice';
+    this.speechRecognitionService.record()
+    .subscribe(
+      (value) => {
+        if (value && value !== '') {
+          if (this.newTodo.nativeElement.value !== '') {
+            this.newTodo.nativeElement.value += ' ' + value;
+          } else {
+            this.newTodo.nativeElement.value = value;
+          }
+          requestAnimationFrame(() => {
+            this.newTodo.nativeElement.focus();
+          });
+        } else {
+          throw new Error('Unrecognized voice');
+        }
+      },
+      (error) => {
+        this.error = error;
+      },
+      () => {
+        this.iconRecord = 'keyboard_voice';
+      });
   }
 
   ngOnInit() {
@@ -58,12 +93,19 @@ export class TodoListComponent implements OnInit {
   }
 
   addTodo() {
-    const todo = {
-      text: this.newTodo.nativeElement.value,
-      isCompleted: false
-    } as Todo;
-    this.store.dispatch(new actions.AddTodoAction(todo));
-    this.newTodo.nativeElement.value = '';
+    if (this.newTodo.nativeElement.value !== '') {
+      const todo = {
+        text: this.newTodo.nativeElement.value,
+        isCompleted: false
+      } as Todo;
+      this.store.dispatch(new actions.AddTodoAction(todo));
+      this.newTodo.nativeElement.value = '';
+    } else {
+      this.newTodo.nativeElement.placeholder = 'Une note ne peut pas être vide';
+      setTimeout(() => {
+        this.newTodo.nativeElement.placeholder = 'Que faire ?';
+      }, 5000);
+    }
   }
 
   toggleAllChange() {

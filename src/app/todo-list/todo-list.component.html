@@ -1,12 +1,13 @@
 <section class="todoapp">
   <header class="header">
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
     <form (ngSubmit)="addTodo()">
       <input class="new-todo" placeholder="Que faire?" #newTodo autofocus>
+      <app-speech-recognition (activateSpeech)="activateSpeech($event)" [iconRecord]="iconRecord"></app-speech-recognition>
     </form>
   </header>
   <section class="main">
-    <input class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
+    <input [disabled]="(getTodos()| async).length === 0" title="Marquer tout comme fait" class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <li *ngFor="let todo of getTodos() | async" [class.completed]="todo.isCompleted === true" [class.editing]="itemchose.editing">

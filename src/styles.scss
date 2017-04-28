@@ -83,7 +83,7 @@ body {
 .edit {
     position: relative;
     margin: 0;
-    width: 100%;
+    width: 90%;
     font-size: 24px;
     font-family: inherit;
     font-weight: inherit;
@@ -353,8 +353,8 @@ html .clear-completed:active {
 
 
 /*
-	Hack to remove background from Mobile Safari.
-	Can't use it globally since it destroys checkboxes in Firefox
+    Hack to remove background from Mobile Safari.
+    Can't use it globally since it destroys checkboxes in Firefox
 */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {

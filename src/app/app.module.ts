@@ -15,15 +15,18 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoComponent } from './todo/todo.component';
+import { SpeechRecognitionService } from './shared/speech-recognition.service';
 import { schema } from './db';
 import { reducer } from './reducers/root.reducers';
 import { TodoListEffects } from './effects/todo-list.effects';
+import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
-    TodoComponent
+    TodoComponent,
+    SpeechRecognitionComponent
   ],
   exports: [
     TodoListComponent
@@ -39,7 +42,9 @@ import { TodoListEffects } from './effects/todo-list.effects';
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(TodoListEffects),
     DBModule.provideDB(schema)
-
+  ],
+  providers: [
+    SpeechRecognitionService
   ],
   bootstrap: [AppComponent]
 })
