@@ -5,6 +5,8 @@ export const INIT_LIST =              '[TodoList] List initial loading';
 export const INIT_LIST_SUCCESS =      '[TodoList] List initial loading success';
 export const DELETE_TODO =            '[TodoList] Delete todo';
 export const DELETE_TODO_SUCCESS =    '[TodoList] Delete todo success';
+export const DELETE_DONE_TODO =            '[TodoList] Delete done todo';
+export const DELETE_DONE_TODO_SUCCESS =    '[TodoList] Delete done todo success';
 export const ADD_TODO =               '[TodoList] Add todo';
 export const ADD_TODO_SUCCESS =       '[TodoList] Add todo success';
 export const CHANGE_STATUS =          '[TodoList] Change status';
@@ -34,6 +36,18 @@ export class DeleteTodoActionSuccess implements Action {
   type = DELETE_TODO_SUCCESS;
 
   constructor(public payload: Todo) { }
+}
+
+export class DeleteDoneTodoAction implements Action {
+  type = DELETE_DONE_TODO;
+
+  constructor(public payload: Todo[]) { }
+}
+
+export class DeleteDoneTodoActionSuccess implements Action {
+  type = DELETE_DONE_TODO_SUCCESS;
+
+  constructor(public payload: Todo[]) { }
 }
 
 export class AddTodoAction implements Action {

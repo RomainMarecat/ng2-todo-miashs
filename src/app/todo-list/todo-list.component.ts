@@ -56,10 +56,21 @@ export class TodoListComponent implements OnInit {
   }
 
   disposeAll() {
-    this.todos.map((todos: Todo[]) =>
-      todos.filter(this.filterCompleted)
-        .forEach(c => this.store.dispatch(new actions.DeleteTodoAction(c)))
-    );
+    let t : Todo[] = [];
+    this.todos.map((todos: Todo[]) => {
+      todos.filter(this.filterCompleted).forEach((c) => {
+        console.log("todo: " + c)
+        t.push(c); // Je comprend pas pourquoi ca ne passe pas la
+      })
+    });
+    console.log("t length " + t.length);
+    // Il faudrait pouvoir passer dans le DeleteDoneTodoAction le tableau de todo qui sont cochées
+    this.store.dispatch(new actions.DeleteDoneTodoAction(t));
+
+    // this.todos.map((todos: Todo[]) =>
+    //   todos.filter(this.filterCompleted)
+    //     .forEach(c => this.store.dispatch(new actions.DeleteTodoAction(c)))
+    // );
   }
 
   addTodo() {

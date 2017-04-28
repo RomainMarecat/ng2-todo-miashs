@@ -43,6 +43,18 @@ export class TodoListEffects {
     });
 
   @Effect()
+  deleteDoneTodo: Observable<Action> = this.actions$
+    .ofType(todoList.DELETE_DONE_TODO)
+    .map((action: todoList.DeleteDoneTodoAction) => {
+      action.payload.forEach(todos => {
+        todo => {
+          this.db.executeWrite('todos', 'delete', [ todo.id ])
+        }
+      });
+      return new todoList.DeleteDoneTodoActionSuccess(action.payload);
+    });
+
+  @Effect()
   addTodo: Observable<Action> = this.actions$
     .ofType(todoList.ADD_TODO)
     .map((action: todoList.AddTodoAction) => action.payload)
