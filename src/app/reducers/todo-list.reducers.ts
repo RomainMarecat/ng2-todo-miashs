@@ -3,8 +3,8 @@ import { Todo } from './../shared/todo';
 
 
 export interface State {
-  todoList: ReadonlyArray<Todo>,
-  activeTodo: Todo
+  todoList: ReadonlyArray<Todo>;
+  activeTodo: Todo;
 }
 
 const initialState: State = {
@@ -30,6 +30,13 @@ export function reducer(state = initialState, action: todoList.Actions): State {
         .filter((v: Todo) => v !== action.payload) as Todo[]
       };
 
+    case todoList.DELETE_TODOS_SUCCESS:
+      return {
+        ...state,
+        todoList: state.todoList
+        .filter((v: Todo) => !v.isCompleted) as Todo[]
+      };
+
     case todoList.ADD_TODO_SUCCESS:
       console.log(state);
       console.log(action.payload);
@@ -43,6 +50,16 @@ export function reducer(state = initialState, action: todoList.Actions): State {
         .filter((t: Todo) => todo.id !== t.id),
         action.payload] as Todo[]
        };
+
+    case todoList.CHANGE_STATUS_ALL_SUCCESS:
+      return {
+        ...state,
+        todoList: state.todoList
+        .map((v: Todo) => {
+          v.isCompleted = !v.isCompleted;
+          return v;
+        }) as Todo[]
+      };
 
     default:
       return state;

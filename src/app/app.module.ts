@@ -37,13 +37,11 @@ import { TodoListEffects } from './effects/todo-list.effects';
     RouterModule,
     AppRoutingModule,
     StoreModule.provideStore(reducer),
-    // RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(TodoListEffects),
     DBModule.provideDB(schema)
 
   ],
-  providers: [TodoListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

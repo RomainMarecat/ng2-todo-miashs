@@ -4,9 +4,9 @@ import { TodoListService } from './../shared/todo-list.service';
 import { Todo } from './../shared/todo';
 import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import * as reducer from './../reducers/root.reducers';
 import * as actions from './../actions/todo-list.actions';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-todo-list',
@@ -51,15 +51,12 @@ export class TodoListComponent implements OnInit {
 
   getCountCompleted(): Observable<number> {
     return this.todos.map((todos: Todo[]) => {
-      return todos.reduce((acc, chose) => acc + (chose.isCompleted ? 1 : 0), 0)
+      return todos.reduce((acc, chose) => acc + (chose.isCompleted ? 1 : 0), 0);
     });
   }
 
   disposeAll() {
-    this.todos.map((todos: Todo[]) =>
-      todos.filter(this.filterCompleted)
-        .forEach(c => this.store.dispatch(new actions.DeleteTodoAction(c)))
-    );
+    this.store.dispatch(new actions.DeleteTodosAction());
   }
 
   addTodo() {
@@ -75,7 +72,7 @@ export class TodoListComponent implements OnInit {
     const check = true;
     this.todos.map((todos: Todo[]) => {
       return todos.forEach((c) => {
-        this.store.dispatch(new actions.ChangeTodoStatus(Object.assign({}, c, {isCompleted: check})))
+        this.store.dispatch(new actions.ChangeTodoStatus(Object.assign({}, c, {isCompleted: check})));
       });
     });
   }
