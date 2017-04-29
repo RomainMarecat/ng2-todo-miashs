@@ -74,7 +74,9 @@ export class TodoComponent implements OnInit {
     const dialogRef = this.dialog.open(TodoDescriptionComponent, mdDialogConfig);
     dialogRef.afterClosed().subscribe((description: string|boolean) => {
       if (description !== false) {
-        this.angulartics2.eventTrack.next({ action: 'Todo change description to ' + description, properties: { category: 'ChangeTodoDescription' }});
+        this.angulartics2.eventTrack.next(
+          { action: 'Todo change description to ' + description,
+          properties: { category: 'ChangeTodoDescription' }});
         this.store.dispatch(new actions.ChangeTodoStatus(
           Object.assign({}, this.todo, {description: description})));
       }
