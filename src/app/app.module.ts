@@ -12,7 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { DBModule } from '@ngrx/db';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MaterialModule, MdButtonModule } from '@angular/material';
+import { MaterialModule } from '@angular/material';
 import { MetaModule } from '@nglibs/meta';
 
 import { AppComponent } from './app.component';

@@ -1,5 +1,5 @@
 <h2 md-dialog-title>Editer la description</h2>
-<div md-dialog-content>
+<div md-dialog-content *ngIf="todo">
   <label for="description" *ngIf="todo.description && !editing" (dblclick)="edit()">
     {{ todo.description }}
   </label>

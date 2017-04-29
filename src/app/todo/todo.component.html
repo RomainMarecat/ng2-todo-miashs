@@ -1,4 +1,4 @@
-<div class="view">
+<div class="view" *ngIf="todo">
   <input #inputDone class="toggle" type="checkbox" name="done" [ngModel]="todo.isCompleted" (ngModelChange)="done(inputDone.checked)">
   <label class="texte" (dblclick)="edit()" *ngIf="!isSmallDevice()">{{ todo.text }}
   </label>

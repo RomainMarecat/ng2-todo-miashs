@@ -15,7 +15,13 @@ export class TodoDescriptionComponent implements OnInit {
   constructor(public dialogRef: MdDialogRef<TodoDescriptionComponent>) { }
 
   ngOnInit() {
-    this.todo = this.dialogRef._containerInstance.dialogConfig.data.todo as Todo;
+    if (this.dialogRef
+      && this.dialogRef._containerInstance
+      && this.dialogRef._containerInstance.dialogConfig
+      && this.dialogRef._containerInstance.dialogConfig.data
+      && this.dialogRef._containerInstance.dialogConfig.data.todo) {
+      this.todo = this.dialogRef._containerInstance.dialogConfig.data.todo as Todo;
+    }
   }
 
   setDescription(description: string) {

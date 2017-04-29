@@ -66,4 +66,4 @@ Add 404 page :
 `cp dist/index.html dist/404.html`
 
 ## Deploy on github
-ngh
+`ngh`

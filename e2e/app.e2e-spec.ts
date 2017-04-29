@@ -7,8 +7,8 @@ describe('ng2-todo App', () => {
     page = new Ng2TodoPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display main title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Todo List');
   });
 });
