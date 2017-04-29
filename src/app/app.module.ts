@@ -13,6 +13,7 @@ import { DBModule } from '@ngrx/db';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule, MdButtonModule } from '@angular/material';
+import { MetaModule } from '@nglibs/meta';
 
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
@@ -50,6 +51,7 @@ import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
     RouterModule,
     AppRoutingModule,
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
+    MetaModule.forRoot(),
     MaterialModule.forRoot(),
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),

@@ -5,6 +5,7 @@ import { TodoFilter } from './../shared/todo-filter';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { SpeechRecognitionService } from './../shared/speech-recognition.service';
+import { Angulartics2 } from 'angulartics2';
 import * as reducer from './../reducers/root.reducers';
 import * as actions from './../actions/todo-list.actions';
 
@@ -15,7 +16,7 @@ import * as actions from './../actions/todo-list.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit, OnDestroy {
-  @Input() title: string;
+  title = 'Todo List';
   @ViewChild('newTodo') newTodo: ElementRef;
   error: any;
   toggle: boolean;
@@ -27,7 +28,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
   iconRecord: string;
 
   constructor(private store: Store<reducer.State>,
-    private speechRecognitionService: SpeechRecognitionService) {
+    private speechRecognitionService: SpeechRecognitionService,
+    private angulartics2: Angulartics2) {
     this.toggle = false;
     this.filterAll = () => true;
     this.filterCompleted = (c) => c.isCompleted;
@@ -51,6 +53,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
           } else {
             this.newTodo.nativeElement.value = value;
           }
+          this.angulartics2.eventTrack.next({ action: value, properties: { category: 'Speech Recognition' }});
           requestAnimationFrame(() => {
             this.newTodo.nativeElement.focus();
           });
@@ -67,6 +70,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.angulartics2.eventTrack.next({ action: 'InitializeAllTodos', properties: { category: 'InitTodos' }});
     this.store.dispatch(new actions.InitListAction());
     this.todos = this.store.select(reducer.getTodoList);
   }
@@ -91,6 +95,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
   disposeAll() {
     this.store.dispatch(new actions.DeleteTodosAction());
+    this.angulartics2.eventTrack.next({ action: 'DeleteAllTodos', properties: { category: 'Delete' }});
   }
 
   addTodo() {
@@ -102,6 +107,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
         description: ''
       } as Todo;
       this.store.dispatch(new actions.AddTodoAction(todo));
+      this.angulartics2.eventTrack.next({ action: 'Add new todo ' + todo.text, properties: { category: 'AddTodo' }});
       this.newTodo.nativeElement.value = '';
     } else {
       this.newTodo.nativeElement.placeholder = 'Une note ne peut pas être vide';

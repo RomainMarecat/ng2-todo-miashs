@@ -1,4 +1,15 @@
-# Ng2Todo
+# Todo List
+
+## A Todo app example featuring ngrx/store - RxJS powered state management inspired by Redux for Angular apps.
+
+- ngrx/store
+- ngrx/effects
+- ngrx/store-devtools
+- ngrx/db
+- RxJS
+- Material Angular
+- SCSS
+- @angular-cli
 
 Pour contribuer :
 ```
@@ -37,12 +48,6 @@ git rebase --continue
 git push origin feat/your-feature -f
 ```
 }
-
-Redux :
-ngx store
-changeDetection: ng.core.ChangeDetectionStrategy.OnPush
-immutable
-
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
