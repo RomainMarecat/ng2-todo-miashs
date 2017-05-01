@@ -58,6 +58,7 @@ export class TodoListComponent implements OnInit {
 
   addTodo() {
     this.nf.Ajouter(this.newTodo.nativeElement.value);
+    this.newTodo.nativeElement.value="";
   }
 
   toggleAllChange() {

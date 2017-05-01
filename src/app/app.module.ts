@@ -11,6 +11,7 @@ import { TodoListService } from './shared/todo-list.service';
 import {SpeechSynthesisComponent} from "./speech/speech-synthesis/speech-synthesis.component";
 import {SpeechRecognitionComponent} from "./speech/speech-recognition/speech-recognition.component";
 import {SpeechRecognitionService} from "./speech/speech-recognition.service";
+import {SpeechSynthesisService} from "./speech/speech-synthesis.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {SpeechRecognitionService} from "./speech/speech-recognition.service";
   ],
   providers: [
     TodoListService,
-    SpeechRecognitionService
+    SpeechRecognitionService,
+    SpeechSynthesisService
   ],
   bootstrap: [AppComponent]
 })

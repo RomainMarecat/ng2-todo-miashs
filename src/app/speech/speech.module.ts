@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SpeechSynthesisComponent } from './speech-synthesis/speech-synthesis.component';
 import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
 import { SpeechRecognitionService } from './speech-recognition.service';
+import { SpeechSynthesisService } from './speech-synthesis.service';
 import {TodoListService} from "../shared/todo-list.service";
 
 @NgModule({
@@ -15,6 +16,7 @@ import {TodoListService} from "../shared/todo-list.service";
   ],
   providers: [
     SpeechRecognitionService,
+    SpeechSynthesisService,
     TodoListService
   ]
 })
