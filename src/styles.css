@@ -4,6 +4,31 @@ body {
     padding: 0;
 }
 
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 button {
     margin: 0;
     padding: 0;
@@ -104,12 +129,25 @@ input[type="checkbox"] {
 }
 
 .new-todo {
+    display: inline-block;
     padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
     box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 
+form {
+    display: inline-block;
+    margin-right: 100px;
+}
+
+.speech-recognition{
+    display: inline-block;
+    margin-left:20px;
+    width:40px;
+    height:40px;
+    right:0;
+}
 .main {
     position: relative;
     z-index: 2;
@@ -247,18 +285,18 @@ label[for='toggle-all'] {
     width: 40px;
     height: 40px;
     margin: auto 0;
-    font-size: 25px;
-    color: #8db5f4;
-    margin-bottom: 11px;
+    font-size: 20px;
+    color: #cc9a9a;
+    margin-bottom: 8px;
     transition: color 0.2s ease-out;
 }
 
 .todo-list li .listen:hover {
-    color: #558ae0;
+    color: #af5b5e;
 }
 
 .todo-list li .listen:after {
-    content: '§';
+
 }
 
 .todo-list li:hover .listen {

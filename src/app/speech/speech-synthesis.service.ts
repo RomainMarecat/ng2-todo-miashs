@@ -9,6 +9,6 @@ export class SpeechSynthesisService {
     let synth = window.speechSynthesis;
     let utterance = new SpeechSynthesisUtterance(vocal);
     synth.speak(utterance);
-    //console.log("SpeechSynthesisService : " + vocal);
+    console.log("SpeechSynthesisService : " + vocal);
   }
 }
