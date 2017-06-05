@@ -11,44 +11,6 @@
 - SCSS
 - @angular-cli
 
-Pour contribuer :
-```
-git clone https://github.com/RomainMarecat/ng2-todo-miashs.git
-cd ng2-todo-miashs
-git checkout -b feat/your-feature
-npm install
-npm install -g @angular/cli
-ng serve
-```
-Fais ta feature.
-```
-ng lint
-ng build
-git add *
-git commit -m "Your feature description"
-git push origin feat/your-feature
-```
-Sur bitbucket, Crée ta PR (Pull Request)
-
------
-
-Pour récupérer les nouvelles MAJ,
-```
-git checkout master
-git pull origin master
-git checkout feat/your-feature
-git rebase master
-```
-Si il y a un conflit ?
-Résoudre le conflit
-while (conflit) {
-```
-git add *
-git rebase --continue
-git push origin feat/your-feature -f
-```
-}
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Development server

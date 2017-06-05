@@ -1,0 +1,11 @@
+.edit {
+    @media (min-width: 300px) {
+        max-width: 12rem;
+    }
+    @media (min-width: 600px) {
+        max-width: 30rem;
+    }
+    @media (min-width: 1200px) {
+        max-width: 100%;
+    }
+}

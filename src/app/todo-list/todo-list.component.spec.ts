@@ -32,7 +32,7 @@ describe('TodoListComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule.forRoot(),
+        MaterialModule,
         RouterTestingModule.withRoutes([
          { path: '', component: TodoListComponent }
         ]),

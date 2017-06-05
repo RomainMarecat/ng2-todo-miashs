@@ -27,7 +27,7 @@ describe('TodoComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule.forRoot(),
+        MaterialModule,
         RouterTestingModule.withRoutes([
          { path: '', component: TodoComponent }
         ]),

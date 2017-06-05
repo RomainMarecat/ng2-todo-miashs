@@ -30,8 +30,8 @@ describe('TodoDescriptionComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule.forRoot(),
-        MdDialogModule.forRoot(),
+        MaterialModule,
+        MdDialogModule,
       ],
       providers: [
         SpeechRecognitionService,

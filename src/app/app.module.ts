@@ -52,7 +52,7 @@ import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
     AppRoutingModule,
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
     MetaModule.forRoot(),
-    MaterialModule.forRoot(),
+    MaterialModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(TodoListEffects),

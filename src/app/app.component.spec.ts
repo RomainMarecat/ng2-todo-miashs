@@ -42,7 +42,7 @@ describe('AppComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule.forRoot(),
+        MaterialModule,
         Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
         RouterTestingModule.withRoutes([
          { path: '', component: TodoListComponent }
