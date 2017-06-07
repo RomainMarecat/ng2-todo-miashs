@@ -1,8 +1,8 @@
 <section class="todoapp todo-theme-default">
   <header class="header">
-    <h1>{{ title }}</h1>
+    <h1>todos</h1>
     <form (ngSubmit)="addTodo()">
-      <input class="new-todo" placeholder="What to do ?" #newTodo autofocus>
+      <input class="new-todo" placeholder="What needs to be done ?" #newTodo autofocus>
       <app-speech-recognition (activateSpeech)="activateSpeech($event)" [iconRecord]="iconRecord"></app-speech-recognition>
     </form>
   </header>
@@ -16,18 +16,18 @@
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count">{{ getCountTodo()|async }}<strong></strong> left</span>
+    <span class="todo-count"><strong>{{ getCountTodo()|async }}</strong> <span>{{ (getCountTodo()|async) > 1  ? 'items' : 'item' }}</span> left</span>
     <ul class="filters">
       <li>
         <a [class.selected]="currentFilter === filterAll" (click)="currentFilter = filterAll" class="filterAll">All</a>
       </li>
       <li>
-        <a [class.selected]="currentFilter === filterActives" (click)="currentFilter = filterActives" class="filterActives">Assets</a>
+        <a [class.selected]="currentFilter === filterActives" (click)="currentFilter = filterActives" class="filterActives">Active</a>
       </li>
       <li>
         <a [class.selected]="currentFilter === filterCompleted" (click)="currentFilter = filterCompleted" class="filterCompleted">Completed</a>
       </li>
     </ul>
-    <button class="clear-completed" *ngIf="(getCountCompleted()|async) > 0" (click)="disposeAll()">Remove checked</button>
+    <button class="clear-completed" *ngIf="(getCountCompleted()|async) > 0" (click)="disposeAll()">Clear Completed</button>
   </footer>
 </section>

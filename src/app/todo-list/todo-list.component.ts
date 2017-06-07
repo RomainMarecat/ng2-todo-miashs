@@ -16,7 +16,6 @@ import * as actions from './../actions/todo-list.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListComponent implements OnInit, OnDestroy {
-  title = 'Todo List';
   @ViewChild('newTodo') newTodo: ElementRef;
   error: any;
   toggle: boolean;
