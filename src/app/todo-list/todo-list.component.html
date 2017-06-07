@@ -2,32 +2,32 @@
   <header class="header">
     <h1>{{ title }}</h1>
     <form (ngSubmit)="addTodo()">
-      <input class="new-todo" placeholder="Que faire?" #newTodo autofocus>
+      <input class="new-todo" placeholder="What to do ?" #newTodo autofocus>
       <app-speech-recognition (activateSpeech)="activateSpeech($event)" [iconRecord]="iconRecord"></app-speech-recognition>
     </form>
   </header>
   <section class="main">
-    <input [disabled]="(getTodos()| async).length === 0" title="Marquer tout comme fait" class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
+    <input [disabled]="(getTodos()| async).length === 0" title="Mark all as complete" class="toggle-all" type="checkbox" (ngModelChange)="toggleAllChange()" [ngModel]="toggleAll()|async">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-      <li *ngFor="let todo of getTodos() | async" [class.completed]="todo.isCompleted === true" [class.editing]="itemchose.editing">
-        <app-todo [todo]="todo" #itemchose></app-todo>
+      <li *ngFor="let todo of getTodos() | async" [class.completed]="todo.isCompleted === true" [class.editing]="itemTodo.editing">
+        <app-todo [todo]="todo" #itemTodo></app-todo>
       </li>
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count">{{ getCountTodo()|async }}<strong></strong> restantes</span>
+    <span class="todo-count">{{ getCountTodo()|async }}<strong></strong> left</span>
     <ul class="filters">
       <li>
-        <a [class.selected]="currentFilter === filterAll" (click)="currentFilter = filterAll" class="filterAll">Tous</a>
+        <a [class.selected]="currentFilter === filterAll" (click)="currentFilter = filterAll" class="filterAll">All</a>
       </li>
       <li>
-        <a [class.selected]="currentFilter === filterActives" (click)="currentFilter = filterActives" class="filterActives">Actifs</a>
+        <a [class.selected]="currentFilter === filterActives" (click)="currentFilter = filterActives" class="filterActives">Assets</a>
       </li>
       <li>
-        <a [class.selected]="currentFilter === filterCompleted" (click)="currentFilter = filterCompleted" class="filterCompleted">Complétés</a>
+        <a [class.selected]="currentFilter === filterCompleted" (click)="currentFilter = filterCompleted" class="filterCompleted">Completed</a>
       </li>
     </ul>
-    <button class="clear-completed" *ngIf="(getCountCompleted()|async) > 0" (click)="disposeAll()">Supprimer cochées</button>
+    <button class="clear-completed" *ngIf="(getCountCompleted()|async) > 0" (click)="disposeAll()">Remove checked</button>
   </footer>
 </section>

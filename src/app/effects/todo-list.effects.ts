@@ -12,9 +12,6 @@ import * as todoList from './../actions/todo-list.actions';
 
 @Injectable()
 export class TodoListEffects {
-  constructor(private actions$: Actions,
-    private db: Database) { }
-
   @Effect({ dispatch: false })
     openDB$: Observable<any> = defer(() =>
       this.db.open('todo_app')
@@ -130,4 +127,6 @@ export class TodoListEffects {
         )
       )
     );
+  constructor(private actions$: Actions,
+    private db: Database) { }
 }
