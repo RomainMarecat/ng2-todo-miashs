@@ -10,10 +10,12 @@ const routes: Routes = [
     canActivate: [MetaGuard],
     data: {
       meta: {
-        title: 'Todo List with Angular2 and ngrx/store',
+        title: 'Todo List with Angular and ngrx/store',
         description: 'A Todo app example featuring ngrx/store - RxJS powered state management inspired by Redux for Angular apps',
         publisher: 'Romain Marecat',
-        author: 'Romain Marecat'
+        author: 'Romain Marecat',
+        'og:type': 'website',
+        'og:locale': 'en_US',
       }
     }
   },
@@ -23,10 +25,12 @@ const routes: Routes = [
     canActivate: [MetaGuard],
     data: {
       meta: {
-        title: 'Todo List with Angular2 and ngrx/store',
+        title: 'Todo List with Angular and ngrx/store',
         description: 'A Todo app example featuring ngrx/store - RxJS powered state management inspired by Redux for Angular apps',
         publisher: 'Romain Marecat',
-        author: 'Romain Marecat'
+        author: 'Romain Marecat',
+        'og:type': 'website',
+        'og:locale': 'en_US',
       }
     }
   },
