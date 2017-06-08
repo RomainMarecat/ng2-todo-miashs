@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: 
+
+Sitemap: https://romainmarecat.github.io/ng2-todo-miashs/sitemap.xml
